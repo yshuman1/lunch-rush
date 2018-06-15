@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react';
-import './NewRestaurant.css';
+import React, { Component, PropTypes } from "react";
+import "./NewRestaurant.css";
 
 class NewRestaurant extends Component {
   constructor() {
     super();
     this.state = {
-      name: ''
+      name: ""
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,19 +19,14 @@ class NewRestaurant extends Component {
     const { name } = this.state;
 
     return (
-      <form
-        className="NewRestaurant"
-      >
+      <form className="NewRestaurant">
         <input
           type="text"
-          value={ name }
+          value={name}
           placeholder="Name of Fine Establishment"
-          onChange={(event) => this.setState({ name: event.target.value })}
+          onChange={event => this.setState({ name: event.target.value })}
         />
-        <button
-          onClick={this.handleSubmit}
-          disabled={!name}
-        >
+        <button onClick={this.handleSubmit} disabled={!name}>
           Submit
         </button>
       </form>

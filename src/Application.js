@@ -13,10 +13,10 @@ class Application extends Component {
       currentUser: null
     };
   }
+
   componentDidMount() {
     auth.onAuthStateChanged(currentUser => {
-      console.log("Auth Change", currentUser);
-      this.setState(currentUser);
+      this.setState({ currentUser });
     });
   }
 
@@ -30,7 +30,12 @@ class Application extends Component {
         </header>
         <div>
           {!currentUser && <SignIn />}
-          {currentUser && <CurrentUser user={currentUser} />}
+          {currentUser && (
+            <div>
+              <NewRestaurant />
+              <CurrentUser user={currentUser} />}
+            </div>
+          )}
         </div>
       </div>
     );
