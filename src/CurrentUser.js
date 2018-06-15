@@ -11,9 +11,11 @@ const CurrentUser = ({ user }) => {
         alt={user.displayName}
       />
       <div className="CurrentUser--identification">
-        <h3>{user.displayName}</h3>
-        <p>{user.email}</p>
-        <button onClick={() => auth.signOut()}>Sign Out</button>
+        <h3 className="CurrentUser--displayName">{user.displayName}</h3>
+        <p className="CurrentUser--email">{user.email}</p>
+        <button className="CurrentUser--signout" onClick={() => auth.signOut()}>
+          Sign Out
+        </button>
       </div>
     </div>
   );

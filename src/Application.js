@@ -9,34 +9,45 @@ import "./Application.css";
 class Application extends Component {
   constructor(props) {
     super(props);
+    this.restaurantsRef = null;
     this.state = {
-      currentUser: null
+      user: null
     };
   }
 
-  componentDidMount() {
-    auth.onAuthStateChanged(currentUser => {
-      this.setState({ currentUser });
+  componentWillMount() {
+    auth.onAuthStateChanged(user => {
+      this.setState({ user });
+      this.restaurantsRef = database.ref("restaurants");
+      this.restaurantsRef.on("value", snapshot => {
+        this.setState({ restaurants: snapshot.val() });
+      });
     });
   }
 
   render() {
-    const { currentUser } = this.state;
+    const { user, restaurants } = this.state;
 
     return (
       <div className="Application">
         <header className="Application--header">
           <h1>Lunch Rush</h1>
         </header>
-        <div>
-          {!currentUser && <SignIn />}
-          {currentUser && (
-            <div>
-              <NewRestaurant />
-              <CurrentUser user={currentUser} />}
-            </div>
-          )}
-        </div>
+        {user ? (
+          <div>
+            <NewRestaurant restaurantsRef={this.restaurantsRef} />
+            {restaurants && (
+              <Restaurants
+                restaurants={restaurants}
+                user={user}
+                restaurantsRef={this.restaurantsRef}
+              />
+            )}
+            <CurrentUser user={user} />
+          </div>
+        ) : (
+          <SignIn />
+        )}
       </div>
     );
   }
